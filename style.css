@@ -1,0 +1,188 @@
+:root {
+  --bg: #fafafa;
+  --node-fill: #ffffff;
+  --node-stroke: #555555;
+  --text: #1a1a1a;
+  --accent: #2f6fde;
+  --accent-fill: #e6efff;
+  --muted: #555555;
+  --warn: #b42318;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #18181b;
+    --node-fill: #27272a;
+    --node-stroke: #a1a1aa;
+    --text: #f4f4f5;
+    --accent: #6ea2ff;
+    --accent-fill: #1e2a44;
+    --muted: #a1a1aa;
+    --warn: #ff8a80;
+  }
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+#canvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  font-family: system-ui, sans-serif;
+  font-size: 16px;
+  user-select: none;
+}
+
+.node { cursor: pointer; }
+
+#edges line {
+  stroke: var(--node-stroke);
+  stroke-width: 1.5;
+  pointer-events: none;
+}
+
+.node ellipse {
+  fill: var(--node-fill);
+  stroke: var(--node-stroke);
+  stroke-width: 1.5;
+}
+
+.node text {
+  white-space: pre; /* keep repeated spaces, as the text box shows them */
+  fill: var(--text);
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.node:hover ellipse { stroke: var(--accent); }
+
+.node.selected ellipse {
+  fill: var(--accent-fill);
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+/* While editing, the SVG label stays in place (so it can still be measured) but is hidden;
+   the HTML input on top shows the text instead. */
+.node.editing text { visibility: hidden; }
+
+#toolbar {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  font-family: system-ui, sans-serif;
+}
+
+#toolbar .buttons {
+  display: flex;
+  gap: 6px;
+}
+
+#toolbar button {
+  font: inherit;
+  font-size: 14px;
+  padding: 6px 12px;
+  border: 1px solid var(--node-stroke);
+  border-radius: 6px;
+  background: var(--node-fill);
+  color: var(--text);
+  cursor: pointer;
+}
+
+#toolbar button:hover:not(:disabled) { border-color: var(--accent); }
+
+#toolbar button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+#status {
+  max-width: 280px;
+  font-size: 13px;
+  text-align: right;
+  color: var(--muted);
+}
+
+#status.warn { color: var(--warn); }
+
+#export-panel {
+  position: fixed;
+  right: 12px;
+  bottom: 12px;
+  width: min(560px, calc(100vw - 24px));
+  height: min(360px, calc(100vh - 120px));
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--node-stroke);
+  border-radius: 8px;
+  background: var(--node-fill);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+  font-size: 14px;
+  box-shadow: 0 4px 20px rgb(0 0 0 / 0.15);
+}
+
+#export-panel[hidden] { display: none; }
+
+#export-panel header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--node-stroke);
+}
+
+#export-panel h2 {
+  margin: 0;
+  margin-right: auto;
+  font-size: 14px;
+}
+
+#export-panel label { display: flex; align-items: center; gap: 4px; }
+
+#export-panel button {
+  font: inherit;
+  padding: 3px 10px;
+  border: 1px solid var(--node-stroke);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+}
+
+#export-code {
+  flex: 1;
+  margin: 0;
+  padding: 10px;
+  border: none;
+  border-radius: 0 0 8px 8px;
+  resize: none;
+  background: var(--bg);
+  color: var(--text);
+  font: 13px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+#label-editor {
+  position: fixed;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+  text-align: center;
+  resize: none;
+  overflow: hidden;
+  white-space: pre;
+}

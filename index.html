@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tree Editor</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="layout.js" defer></script>
+  <script src="optimize.js" defer></script>
+  <script src="tikz.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <svg id="canvas" xmlns="http://www.w3.org/2000/svg">
+    <g id="viewport">
+      <g id="edges"></g>
+      <g id="nodes"></g>
+    </g>
+  </svg>
+  <div id="toolbar">
+    <div class="buttons">
+      <button id="undo-btn" type="button" title="Undo (Ctrl+Z)" disabled>Undo</button>
+      <button id="redo-btn" type="button" title="Redo (Ctrl+Shift+Z)" disabled>Redo</button>
+      <button id="optimize-btn" type="button">Optimize order</button>
+      <button id="export-btn" type="button">Export TikZ</button>
+    </div>
+    <div id="status" role="status" aria-live="polite"></div>
+  </div>
+  <section id="export-panel" hidden aria-label="TikZ export">
+    <header>
+      <h2>TikZ</h2>
+      <label><input id="export-standalone" type="checkbox"> Standalone document</label>
+      <button id="export-copy" type="button">Copy</button>
+      <button id="export-close" type="button" aria-label="Close">✕</button>
+    </header>
+    <textarea id="export-code" readonly spellcheck="false" wrap="off"></textarea>
+  </section>
+  <textarea id="label-editor" rows="1" wrap="off" spellcheck="false" autocomplete="off" hidden></textarea>
+</body>
+</html>
